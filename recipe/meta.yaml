@@ -1,5 +1,5 @@
 {% set name = "pysam" %}
-{% set version = "0.22.0" %}
+{% set version = "0.22.1" %}
 
 package:
   name: {{ name }}
@@ -7,7 +7,7 @@ package:
 
 source:
   url: https://github.com/pysam-developers/pysam/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: 61b3377c5f889ddc6f6979912c3bb960d7e08407dada9cb38f13955564ea036f
+  sha256: e4981524d7627c53fa0d3f8cbec2bd65c2ea7520092f25e1029af12cb7b82ff6
   patches:
     - patches/0001-Unvendor-deps.patch
 
@@ -38,7 +38,7 @@ requirements:
     - libcurl 8
     - bzip2 {{ bzip2 }}
     - xz {{ xz }}
-    - libdeflate 1.17
+    - libdeflate 1.22
     # Only required for libcrypto.
     # On macOS, links to libSystem
     - openssl  {{ openssl }}  # [linux]
