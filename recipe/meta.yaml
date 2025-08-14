@@ -1,13 +1,13 @@
 {% set name = "pysam" %}
-{% set version = "0.22.1" %}
+{% set version = "0.23.3" %}
 
 package:
   name: {{ name }}
   version: {{ version }}
 
 source:
-  url: https://github.com/pysam-developers/pysam/archive/refs/tags/v{{ version }}.tar.gz
-  sha256: e4981524d7627c53fa0d3f8cbec2bd65c2ea7520092f25e1029af12cb7b82ff6
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/pysam-{{ version }}.tar.gz
+  sha256: 9ebcb1f004b296fd139b103ec6fd7e415e80f89f194eb7d0d972ac6d11bbaf24
   patches:
     - patches/0001-Unvendor-deps.patch
 
@@ -15,6 +15,7 @@ build:
   number: 0
   # https://github.com/samtools/htslib/issues/86
   skip: True  # [win]
+  skip: True  # [py<38]
   script_env:
     # This is the default, but it's preferable to be explicit.
     - HTSLIB_MODE=shared
@@ -26,14 +27,15 @@ build:
 requirements:
   build:
     - {{ compiler('c') }}
+    - {{ stdlib('c') }}
     - patch
     - make
   host:
     - python
     - pip
-    - setuptools
+    - setuptools >=59.0
     - wheel
-    - cython >=3
+    - cython >=3,<4
     # These are required for the vendored htslib.
     - libcurl 8
     - bzip2 {{ bzip2 }}
@@ -60,6 +62,10 @@ test:
     - pysam
   commands:
     - pip check
+    - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
+    # All tests are required 'samtools', 'bcftools' or 'htslib' which are not in Conda yet or are incompatible.
+    # Skip them until those packages will released in Conda
+    # - REF_PATH=':' pytest gh_src/tests -v {{ skip_test_file }}
   requires:
     - pip
 
@@ -75,3 +81,7 @@ about:
     such as those routinely created by next-generation sequencing methods.
   dev_url: https://github.com/pysam-developers/pysam
   doc_url: https://pysam.readthedocs.io
+
+extra:
+  skip-lints:
+    - patch_unnecessary
