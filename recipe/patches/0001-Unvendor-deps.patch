@@ -1,5 +1,19 @@
---- setup.py	2025-08-14 09:28:27
-+++ setup_new.py	2025-08-14 09:43:06
+From f40f36cae9cab99c5544c6707f18724cf1fc9632 Mon Sep 17 00:00:00 2001
+From: Jean-Christophe Morin <jcmorin@anaconda.com>
+Date: Fri, 2 Feb 2024 13:51:49 -0500
+Subject: [PATCH] Unvendor lz4 and compile a dynalic htslib instead of static.
+
+Note that we don't unvendor samtools and bcftools because they are modified from upstream
+and we can't unvendor them. As for htslib, it was considered unnecessary to unvendor
+since its version is tightly coupled with pysam, bcftools and samtools.
+---
+ setup.py | 20 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
+
+diff --git a/setup.py b/setup.py
+index 455b42a..df88487 100644
+--- a/setup.py
++++ b/setup.py
 @@ -500,6 +500,9 @@
      # all object files are pulled into the link, even those not used by htslib itself.
      htslib_objects = [os.path.join("htslib", x)

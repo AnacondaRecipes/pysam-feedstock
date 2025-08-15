@@ -59,7 +59,24 @@ requirements:
 
 test:
   imports:
-    - pysam
+    - pysam.config
+    - pysam.libcalignedsegment
+    - pysam.libcalignmentfile
+    - pysam.libcbcf
+    - pysam.libcbcftools
+    - pysam.libcbgzf
+    - pysam.libcfaidx
+    - pysam.libchtslib
+    - pysam.libcsamfile
+    - pysam.libcsamtools
+    - pysam.libctabix
+    - pysam.libctabixproxies
+    - pysam.libcutils
+    - pysam.libcvcf
+    - pysam.Pileup
+    - pysam.samtools
+    - pysam.utils
+    - pysam.version
   commands:
     - pip check
     - python -c "from importlib.metadata import version; assert(version('{{ name }}')=='{{ version }}')"
