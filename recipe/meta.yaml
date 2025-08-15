@@ -19,6 +19,8 @@ build:
   script_env:
     # This is the default, but it's preferable to be explicit.
     - HTSLIB_MODE=shared
+    - SHLIB_EXT=.so # [linux]
+    - SHLIB_EXT=.dylib # [osx]
   script:
     # Delete samtools/lz4 just to make sure they are not used/compiled by accident.
     - rm -rf samtools/lz4
@@ -98,7 +100,4 @@ about:
     such as those routinely created by next-generation sequencing methods.
   dev_url: https://github.com/pysam-developers/pysam
   doc_url: https://pysam.readthedocs.io
-
-extra:
-  skip-lints:
-    - patch_unnecessary
+  
