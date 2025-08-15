@@ -37,14 +37,14 @@ requirements:
     - wheel
     - cython >=3,<4
     # These are required for the vendored htslib.
-    - libcurl 8
+    - libcurl {{ libcurl }}
     - bzip2 {{ bzip2 }}
     - xz {{ xz }}
-    - libdeflate 1.22
+    - libdeflate {{ libdeflate }}
     # Only required for libcrypto.
     # On macOS, links to libSystem
     - openssl  {{ openssl }}  # [linux]
-    - lz4-c 1.9
+    - lz4-c {{ lz4_c }}
     # These are required for the vendored htslib, bcftools and samtools.
     - zlib {{ zlib }}
   run:
